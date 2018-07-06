@@ -44,3 +44,11 @@ enum class Servo2Status
 	Open,
 	Close
 };
+
+enum class RGBStatus
+{
+	Red,
+	Green,
+	Blue,
+	Off
+};

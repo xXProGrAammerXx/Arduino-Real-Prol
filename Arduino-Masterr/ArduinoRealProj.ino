@@ -56,10 +56,15 @@ Forced forced = Forced::Neutral;
 int RGBbluePin = 4;
 int RGBgreenPin = 7;
 int RGBredPin = 8;
+RGBStatus RGB = RGBStatus::Off;
 /*----------------------------*/
 int yellowPin = 9;	//Not Implemented
 int bluePin = 12;
 //////////////////////////////
+
+////Debug////
+int RGBSTAT = 0; // 0 = Off | 1 = Green | 2 = Red | 3 = Blue
+////////////
 
 void setup()
 {
@@ -105,10 +110,11 @@ void setup()
 	pinMode( RGBbluePin, OUTPUT );
 	pinMode( RGBgreenPin, OUTPUT );
 	pinMode( RGBredPin, OUTPUT );
-	digitalWrite( RGBredPin, HIGH );
-	digitalWrite( RGBgreenPin, HIGH );
-	digitalWrite( RGBbluePin, HIGH );
-
+	digitalWrite( RGBredPin, LOW );
+	digitalWrite( RGBgreenPin, LOW );
+	digitalWrite( RGBbluePin, LOW );
+	RGB = RGBStatus::Off;
+	/********************************/
 	pinMode( yellowPin, OUTPUT );
 	pinMode( bluePin, OUTPUT );
 	digitalWrite( yellowPin, HIGH );
@@ -205,13 +211,17 @@ void loop()
 		//////LEDs Stuff/////////////////////////////////////
 		if ( forced == Forced::Neutral )
 		{
-			digitalWrite( RGBredPin, HIGH );
-			digitalWrite( RGBgreenPin, LOW );
+			digitalWrite( RGBredPin, LOW );
+			digitalWrite( RGBgreenPin, HIGH );
+			digitalWrite( RGBbluePin, LOW );
+			RGB = RGBStatus::Green;
 		}
 		else
 		{
-			digitalWrite( RGBgreenPin, HIGH );
-			digitalWrite( RGBredPin, LOW );
+			digitalWrite( RGBgreenPin, LOW );
+			digitalWrite( RGBredPin, HIGH );
+			digitalWrite( RGBbluePin, LOW );
+			RGB = RGBStatus::Red;
 		}
 
 		if ( currentTime == DayNight::Day )
@@ -482,9 +492,10 @@ void loop()
 		lcd.clear();
 		writing = LCDwriting::None;
 		//shut down the RGB
-		digitalWrite( RGBredPin, HIGH );
-		digitalWrite( RGBgreenPin, HIGH );
-		digitalWrite( RGBbluePin, HIGH );
+		digitalWrite( RGBredPin, LOW );
+		digitalWrite( RGBgreenPin, LOW );
+		digitalWrite( RGBbluePin, LOW );
+		RGB = RGBStatus::Off;
 		///////////////////
 		if ( yValue <= 100 )
 		{
@@ -493,6 +504,22 @@ void loop()
 	}
 
 	/*<DEBUG>*/
+	if ( RGB == RGBStatus::Off )
+	{
+		RGBSTAT = 0;
+	}
+	else if ( RGB == RGBStatus::Green )
+	{
+		RGBSTAT = 1;
+	}
+	else if ( RGB == RGBStatus::Red )
+	{
+		RGBSTAT = 2;
+	}
+	else if ( RGB == RGBStatus::Blue )
+	{
+		RGBSTAT = 3;
+	}
 
 	/*</DUBUG>*/
 }
