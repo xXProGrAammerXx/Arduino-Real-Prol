@@ -7,7 +7,7 @@ int readPin = A0;
 int value;
 bool waterLBL = false;
 /*-----------------------*/
-int offSet = 300;
+int offSet = 50;
 /*----------------------*/
 int downReadPin = A3;
 int downValue;
@@ -63,7 +63,6 @@ int bluePin = 12;
 //////////////////////////////
 
 ////Debug////
-int RGBSTAT = 0; // 0 = Off | 1 = Green | 2 = Red | 3 = Blue
 ////////////
 
 void setup()
@@ -500,26 +499,11 @@ void loop()
 		if ( yValue <= 100 )
 		{
 			status = ON_Off::ON;
+
 		}
 	}
 
 	/*<DEBUG>*/
-	if ( RGB == RGBStatus::Off )
-	{
-		RGBSTAT = 0;
-	}
-	else if ( RGB == RGBStatus::Green )
-	{
-		RGBSTAT = 1;
-	}
-	else if ( RGB == RGBStatus::Red )
-	{
-		RGBSTAT = 2;
-	}
-	else if ( RGB == RGBStatus::Blue )
-	{
-		RGBSTAT = 3;
-	}
-
+	
 	/*</DUBUG>*/
 }
