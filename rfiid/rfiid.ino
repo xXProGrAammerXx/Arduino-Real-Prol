@@ -2,10 +2,11 @@
 #include <SPI.h>
 #include <RFID.h>
 
+//101 184 33 195 63
 ////RFID Sftuff//////////////////////////////
 RFID RFIDReader( 10, 9 );
 int UID[ 5 ];
-int NightCard[ 5 ] = { 149,195,250,194,110 };
+int NightCard[ 5 ] = { 101,184,33,195,63 };
 int DayCard[ 5 ] = { 208,226,169,27,128 };
 RFIDStatus status = RFIDStatus::Day;
 /////////////////////////////////////////////
@@ -27,6 +28,7 @@ void loop()
 			{
 				UID[ i ] = RFIDReader.serNum[ i ];
 			}
+
 			if ( UID[ 0 ] == NightCard[ 0 ]
 				&& UID[ 1 ] == NightCard[ 1 ]
 				&& UID[ 2 ] == NightCard[ 2 ]
@@ -44,6 +46,7 @@ void loop()
 				status = RFIDStatus::Day;
 			}
 		}
+
 		if ( status == RFIDStatus::Night )
 		{
 			Serial.print( "$0" );
@@ -52,6 +55,7 @@ void loop()
 		{
 			Serial.print( "$1" );
 		}
+
 		RFIDReader.halt();
 	}
 	delay( 1000 );
